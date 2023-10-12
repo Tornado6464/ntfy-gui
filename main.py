@@ -9,7 +9,7 @@ if configUse == "1":
     server = config["ntfy_server"]
     topic = config["ntfy_topic"]
     title = config["ntfy_title"]
-    priority = ["ntfy_priority"]
+    priority = config["ntfy_priority"]
 
     url = server + "/" + topic
 
