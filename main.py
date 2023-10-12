@@ -18,7 +18,7 @@ if file_exists == False:
     with open('./ntfy-gui/config.json', 'w') as f:
         defaultConfigJson = json.dumps(defaultConfig)
         defaultConfigJsonFormatted = json.loads(defaultConfigJson)
-        f.write(defaultConfigJson)
+        f.write(defaultConfigJsonFormatted)
 
     psg.theme("DarkBlue15")
     layout = [[psg.Text("A directory named \"ntfy-gui\" has been created in this directory. It contains a json configuration file for quicker message sending.")], [psg.Button("OK")]]
