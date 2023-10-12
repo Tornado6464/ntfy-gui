@@ -1,6 +1,6 @@
 {
-  "ntfy_server": "",
-  "ntfy_topic": "",
-  "ntfy_title": "",
-  "ntfy_priority": ""
+  "ntfy_server": "https://ntfy.tylerdavis.net",
+  "ntfy_topic": "General",
+  "ntfy_title": "This is a test",
+  "ntfy_priority": "4"
 }

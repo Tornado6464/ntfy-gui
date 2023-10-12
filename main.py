@@ -1,7 +1,7 @@
 import requests
 import json
 
-configUse = input("Enter a 1 to use the config file values and a 0 to use new values:\n")
+configUse = input("Enter a 1 to use the config file values or a 0 to use custom values:\n")
 
 if configUse == "1":
     with open("config.json", "r") as f:
