@@ -1,8 +1,42 @@
 import requests
 import json
 import PySimpleGUI as psg
+import os
+import os.path
 
-with open("config.json", "r") as f:
+file_exists = os.path.exists('./ntfy-gui/config.json')
+
+if file_exists == False:
+    defaultConfig = {
+        "ntfy_server": "",
+        "ntfy_topic": "",
+        "ntfy_title": "",
+        "ntfy_priority": ""
+    }
+    path = './ntfy-gui'
+    os.mkdir(path)
+    with open('./ntfy-gui/config.json', 'w') as f:
+        defaultConfigJson = json.dumps(defaultConfig)
+        defaultConfigJsonFormatted = json.loads(defaultConfigJson)
+        f.write(defaultConfigJson)
+
+    psg.theme("DarkBlue15")
+    layout = [[psg.Text("A directory named \"ntfy-gui\" has been created in this directory. It contains a json configuration file for quicker message sending.")], [psg.Button("OK")]]
+
+    # Create the window
+    window = psg.Window("Notification", layout)
+
+    # Create an event loop
+    while True:
+        event, values = window.read()
+        # End program if user closes window or
+        # presses the OK button
+        if event == "OK" or event == psg.WIN_CLOSED:
+            break
+
+    window.close()
+
+with open("./ntfy-gui/config.json", "r") as f:
         config = json.load(f)
         defaultServer = config["ntfy_server"]
         defaultTopic = config["ntfy_topic"]
@@ -22,6 +56,7 @@ messageText = psg.Text('What would you like the message to be?', expand_x=True, 
 message = psg.Input('', key='-MESSAGE-', expand_x=True, justification='center')
 send = psg.Button('Send', key='-SEND-')
 
+psg.theme("DarkBlue15")
 layout = [[serverText], [server], [topicText], [topic], [titleText], [title], [priorityText], [priority], [messageText], [message], [send]]
 window = psg.Window('ntfy GUI', layout, size=(1000,500))
 
