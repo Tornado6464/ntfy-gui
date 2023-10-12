@@ -15,26 +15,18 @@ if file_exists == False:
         "ntfy_access_token": ""
     }
     path = './ntfy-gui'
-    os.mkdir(path)
+    try:
+        os.rmdir(path)
+    except:
+        os.mkdir(path)
+    else:
+        os.mkdir(path)
     with open('./ntfy-gui/config.json', 'w') as f:
         defaultConfigJson = json.dumps(defaultConfig)
         f.write(defaultConfigJson)
 
-    psg.theme("DarkBlue15")
-    layout = [[psg.Text("A directory named \"ntfy-gui\" has been created in this directory. It contains a json configuration file for quicker message sending.")], [psg.Button("OK")]]
-
-    # Create the window
-    window = psg.Window("Notification", layout)
-
-    # Create an event loop
-    while True:
-        event, values = window.read()
-        # End program if user closes window or
-        # presses the OK button
-        if event == "OK" or event == psg.WIN_CLOSED:
-            break
-
-    window.close()
+    psg.theme_global("DarkBlue15")
+    psg.popup_ok("A directory named \"ntfy-gui\" has been created in this directory. It contains a json configuration file for quicker message sending.")
 
 with open("./ntfy-gui/config.json", "r") as f:
         config = json.load(f)
@@ -58,9 +50,10 @@ accessToken = psg.Input(defaultAccessToken, key='-ACCESS_TOKEN-', expand_x=True,
 messageText = psg.Text('What would you like the message to be?', expand_x=True, justification='center')
 message = psg.Input('', key='-MESSAGE-', expand_x=True, justification='center')
 send = psg.Button('Send', key='-SEND-')
+save = psg.Button('Save', key='-SAVE-')
 
-psg.theme("DarkBlue15")
-layout = [[serverText], [server], [topicText], [topic], [titleText], [title], [priorityText], [priority], [accessTokenText], [accessToken], [messageText], [message], [send]]
+psg.theme_global("DarkBlue15")
+layout = [[serverText], [server], [topicText], [topic], [titleText], [title], [priorityText], [priority], [accessTokenText], [accessToken], [messageText], [message], [[send],[save]]]
 window = psg.Window('ntfy GUI', layout, size=(1000,500))
 
 while True:
@@ -69,8 +62,11 @@ while True:
     if event == '-SEND-':
         if values['-PRIORITY-'] not in ('12345'):
             psg.popup("Only digits 1-5 are allowed as the priority")
-            window['-PRIORITY-'].update(values['-PRIORITY-'][:-1])
-        elif values['-PRIORITY-'] in ('12345'):
+            window['-PRIORITY-']('')
+        if "https://" not in values['-SERVER-']:
+            psg.popup("You must include \"https://\" in the server field.")
+            window['-SERVER-']('')
+        else:
             server = values['-SERVER-']
             topic = values['-TOPIC-']
             title = values['-TITLE-']
@@ -80,6 +76,33 @@ while True:
             # bearerAuth = "Bearer" + accessToken
             url = server + '/' + topic
             requests.post(url, data=message, headers={"Title":title,"Priority":priority,"Authorization": "Bearer " + accessToken})
-            break
-    if event == psg.WIN_CLOSED or event == 'Exit':
+            psg.popup("Message sent.")
+            # break
+
+    if event =='-SAVE-':
+        server = values['-SERVER-']
+        topic = values['-TOPIC-']
+        title = values['-TITLE-']
+        priority = values['-PRIORITY-']
+        message = values['-MESSAGE-']
+        accessToken = values['-ACCESS_TOKEN-']
+
+        saveConfig = {
+            "ntfy_server": server,
+            "ntfy_topic": topic,
+            "ntfy_title": title,
+            "ntfy_priority": priority,
+            "ntfy_access_token": accessToken
+        }
+        path = './ntfy-gui'
+        os.remove('./ntfy-gui/config.json')
+        os.removedirs(path)
+        os.mkdir(path)
+        with open('./ntfy-gui/config.json', 'w') as f:
+            saveConfigJson = json.dumps(saveConfig)
+            f.write(saveConfigJson)
+        psg.theme("DarkBlue15")
+        psg.popup_ok("Configuration saved")
+
+    if event == psg.WIN_CLOSED or event == '-EXIT-':
         break
