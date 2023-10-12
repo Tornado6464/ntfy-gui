@@ -1,3 +1,3 @@
-# ntfy-python-app
+# ntfy-python-gui
 
-A short python app that allows you to send data to a ntfy server.
+A short python gui that allows you to send data to a ntfy server.
