@@ -2,8 +2,6 @@ import requests
 import json
 import PySimpleGUI as psg
 
-#GUI below here
-
 with open("config.json", "r") as f:
         config = json.load(f)
         defaultServer = config["ntfy_server"]
