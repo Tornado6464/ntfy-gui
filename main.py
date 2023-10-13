@@ -48,13 +48,15 @@ priorityText = psg.Text('What do you want the priority to be? Answer with a numb
 priority = psg.Input(defaultPriority, key='-PRIORITY-', expand_x=True, justification='center')
 accessTokenText = psg.Text('If using a topic behind authentication, enter your access token here.', expand_x=True, justification='center')
 accessToken = psg.Input(defaultAccessToken, key='-ACCESS_TOKEN-', expand_x=True, justification='center')
+emailText = psg.Text('If you would like to send an email containing this message, enter the email address here. Enter no more than one email address.', expand_x=True, justification='center')
+email = psg.Input('', key='-EMAIL-', expand_x=True, justification='center')
 messageText = psg.Text('What would you like the message to be?', expand_x=True, justification='center')
 message = psg.Input('', key='-MESSAGE-', expand_x=True, justification='center')
 send = psg.Button('Send', key='-SEND-')
 save = psg.Button('Save', key='-SAVE-')
 
 psg.theme_global("DarkBlue15")
-layout = [[serverText], [server], [topicText], [topic], [titleText], [title], [priorityText], [priority], [accessTokenText], [accessToken], [messageText], [message], [[send],[save]]]
+layout = [[serverText], [server], [topicText], [topic], [titleText], [title], [priorityText], [priority], [accessTokenText], [accessToken], [emailText], [email], [messageText], [message], [[send],[save]]]
 window = psg.Window('ntfy GUI', layout, size=(1000,500))
 
 while True:
@@ -72,10 +74,11 @@ while True:
             topic = values['-TOPIC-']
             title = values['-TITLE-']
             priority = values['-PRIORITY-']
-            message = values['-MESSAGE-']
             accessToken = values['-ACCESS_TOKEN-']
+            email = values['-EMAIL-']
+            message = values['-MESSAGE-']
             url = server + '/' + topic
-            requests.post(url, data=message, headers={"Title":title,"Priority":priority,"Authorization": "Bearer " + accessToken})
+            requests.post(url, data=message, headers={"Title":title,"Priority":priority,"Authorization": "Bearer " + accessToken, "Email": email})
             psg.popup_ok("Message sent.")
 
     if event =='-SAVE-':
