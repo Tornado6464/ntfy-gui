@@ -3,10 +3,11 @@ import json
 import PySimpleGUI as psg
 import os
 import os.path
+import typing
 
 file_exists = os.path.exists('./ntfy-gui/config.json')
 
-if file_exists == False:
+if not file_exists:
     defaultConfig = {
         "ntfy_server": "",
         "ntfy_topic": "",
@@ -14,7 +15,7 @@ if file_exists == False:
         "ntfy_priority": "",
         "ntfy_access_token": ""
     }
-    path = './ntfy-gui'
+    path:str = './ntfy-gui'
     try:
         os.rmdir(path)
     except:
@@ -29,12 +30,12 @@ if file_exists == False:
     psg.popup_ok("A directory named \"ntfy-gui\" has been created in this directory. It contains a json configuration file for quicker message sending.")
 
 with open("./ntfy-gui/config.json", "r") as f:
-        config = json.load(f)
-        defaultServer = config["ntfy_server"]
-        defaultTopic = config["ntfy_topic"]
-        defaultTitle = config["ntfy_title"]
-        defaultPriority = config["ntfy_priority"]
-        defaultAccessToken = config["ntfy_access_token"]
+        config:dict[str, int] = json.load(f)
+        defaultServer:str = config["ntfy_server"]
+        defaultTopic:str = config["ntfy_topic"]
+        defaultTitle:str = config["ntfy_title"]
+        defaultPriority:str = config["ntfy_priority"]
+        defaultAccessToken:str = config["ntfy_access_token"]
 
 
 serverText = psg.Text('Input the server here. Ensure to include \"https://\".', expand_x=True, justification='center')
@@ -73,11 +74,9 @@ while True:
             priority = values['-PRIORITY-']
             message = values['-MESSAGE-']
             accessToken = values['-ACCESS_TOKEN-']
-            # bearerAuth = "Bearer" + accessToken
             url = server + '/' + topic
             requests.post(url, data=message, headers={"Title":title,"Priority":priority,"Authorization": "Bearer " + accessToken})
-            psg.popup("Message sent.")
-            # break
+            psg.popup_ok("Message sent.")
 
     if event =='-SAVE-':
         server = values['-SERVER-']
