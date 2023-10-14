@@ -5,9 +5,12 @@ import os
 import os.path
 import typing
 
-file_exists = os.path.exists('./ntfy-gui/config.json')
+version = "v1.0.0"
+
 
 # Check if the config.json exists, if it does not, create it.
+file_exists = os.path.exists('./ntfy-gui/config.json')
+
 if not file_exists:
     defaultConfig = {
         "ntfy_server": "",
@@ -40,6 +43,7 @@ with open("./ntfy-gui/config.json", "r") as f:
         defaultAccessToken:str = config["ntfy_access_token"]
 
 # Basic set up for GUI
+headerText = psg.Text('Welcome! You are currently using ' + version + '\n', expand_x=True, justification='center')
 serverText = psg.Text('Input the server here. Ensure to include \"https://\".', expand_x=True, justification='center')
 server = psg.Input(defaultServer, key='-SERVER-', expand_x=True, justification='center')
 topicText = psg.Text('What topic do you want to post to?', expand_x=True, justification='center')
@@ -58,7 +62,7 @@ send = psg.Button('Send', key='-SEND-')
 save = psg.Button('Save', key='-SAVE-')
 
 psg.theme_global("DarkBlue15")
-layout = [[serverText], [server], [topicText], [topic], [titleText], [title], [priorityText], [priority], [accessTokenText], [accessToken], [emailText], [email], [messageText], [message], [[send],[save]]]
+layout = [[headerText], [serverText], [server], [topicText], [topic], [titleText], [title], [priorityText], [priority], [accessTokenText], [accessToken], [emailText], [email], [messageText], [message], [[send],[save]]]
 window = psg.Window('ntfy GUI', layout, size=(1000,500))
 
 # GUI
