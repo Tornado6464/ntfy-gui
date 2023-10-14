@@ -7,6 +7,7 @@ import typing
 
 file_exists = os.path.exists('./ntfy-gui/config.json')
 
+# Check if the config.json exists, if it does not, create it.
 if not file_exists:
     defaultConfig = {
         "ntfy_server": "",
@@ -26,6 +27,7 @@ if not file_exists:
         defaultConfigJson = json.dumps(defaultConfig)
         f.write(defaultConfigJson)
 
+    # Notify the user that a new directory and config.json have been generated.
     psg.theme_global("DarkBlue15")
     psg.popup_ok("A directory named \"ntfy-gui\" has been created in this directory. It contains a json configuration file for quicker message sending.")
 
@@ -37,18 +39,18 @@ with open("./ntfy-gui/config.json", "r") as f:
         defaultPriority:str = config["ntfy_priority"]
         defaultAccessToken:str = config["ntfy_access_token"]
 
-
+# Basic set up for GUI
 serverText = psg.Text('Input the server here. Ensure to include \"https://\".', expand_x=True, justification='center')
 server = psg.Input(defaultServer, key='-SERVER-', expand_x=True, justification='center')
 topicText = psg.Text('What topic do you want to post to?', expand_x=True, justification='center')
 topic = psg.Input(defaultTopic, key='-TOPIC-', expand_x=True, justification='center')
-titleText = psg.Text('What do you want the title to be?', expand_x=True, justification='center')
+titleText = psg.Text('What do you want the title to be? (Optional)', expand_x=True, justification='center')
 title = psg.Input(defaultTitle, key='-TITLE-', expand_x=True, justification='center')
-priorityText = psg.Text('What do you want the priority to be? Answer with a number 1-5.', expand_x=True, justification='center')
+priorityText = psg.Text('What do you want the priority to be? Answer with a number 1-5. (Optional)', expand_x=True, justification='center')
 priority = psg.Input(defaultPriority, key='-PRIORITY-', expand_x=True, justification='center')
-accessTokenText = psg.Text('If using a topic behind authentication, enter your access token here.', expand_x=True, justification='center')
+accessTokenText = psg.Text('If using a topic behind authentication, enter your access token here. (Optional)', expand_x=True, justification='center')
 accessToken = psg.Input(defaultAccessToken, key='-ACCESS_TOKEN-', expand_x=True, justification='center')
-emailText = psg.Text('If you would like to send an email containing this message, enter the email address here. Enter no more than one email address.', expand_x=True, justification='center')
+emailText = psg.Text('If you would like to send an email containing this message, enter the email address here. Enter no more than one email address. (Optional)', expand_x=True, justification='center')
 email = psg.Input('', key='-EMAIL-', expand_x=True, justification='center')
 messageText = psg.Text('What would you like the message to be?', expand_x=True, justification='center')
 message = psg.Input('', key='-MESSAGE-', expand_x=True, justification='center')
@@ -59,6 +61,7 @@ psg.theme_global("DarkBlue15")
 layout = [[serverText], [server], [topicText], [topic], [titleText], [title], [priorityText], [priority], [accessTokenText], [accessToken], [emailText], [email], [messageText], [message], [[send],[save]]]
 window = psg.Window('ntfy GUI', layout, size=(1000,500))
 
+# GUI
 while True:
     event, values = window.read()
     print(event, values)
