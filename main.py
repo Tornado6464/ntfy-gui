@@ -56,7 +56,7 @@ accessTokenText = psg.Text('If using a topic behind authentication, enter your a
 accessToken = psg.Input(defaultAccessToken, key='-ACCESS_TOKEN-', expand_x=True, justification='center')
 emailText = psg.Text('If you would like to send an email containing this message, enter the email address here. Enter no more than one email address. (Optional)', expand_x=True, justification='center')
 email = psg.Input('', key='-EMAIL-', expand_x=True, justification='center')
-phoneText = psg.Text('Send to notification to a phone number. Requires the authentication field to be filled out.', expand_x=True, justification='center')
+phoneText = psg.Text('Send to notification to a phone number. Requires the authentication field to be filled out. (Optional)', expand_x=True, justification='center')
 phone = psg.Input('', key='-PHONE-', expand_x=True, justification='center')
 messageText = psg.Text('What would you like the message to be?', expand_x=True, justification='center')
 message = psg.Input('', key='-MESSAGE-', expand_x=True, justification='center')
@@ -65,7 +65,7 @@ save = psg.Button('Save', key='-SAVE-')
 
 psg.theme_global("DarkBlue15")
 layout = [[headerText], [serverText], [server], [topicText], [topic], [titleText], [title], [priorityText], [priority], [accessTokenText], [accessToken], [emailText], [email], [phoneText], [phone], [messageText], [message], [[send],[save]]]
-window = psg.Window('ntfy GUI', layout, size=(1000,500))
+window = psg.Window('ntfy GUI', layout, size=(1000,600))
 
 # GUI
 while True:
