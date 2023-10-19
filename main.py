@@ -114,7 +114,7 @@ while True:
             saveConfigJson = json.dumps(saveConfig)
             f.write(saveConfigJson)
         psg.theme("DarkBlue15")
-        psg.popup_ok("Configuration saved")
+        psg.popup_ok("Configuration saved.")
 
     if event == psg.WIN_CLOSED or event == '-EXIT-':
         break
