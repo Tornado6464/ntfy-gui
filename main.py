@@ -5,7 +5,7 @@ import os
 import os.path
 import typing
 
-version = "v1.1.0"
+version = "v1.1.1"
 
 
 # Check if the config.json exists, if it does not, create it.
@@ -56,7 +56,7 @@ accessTokenText = psg.Text('If using a topic behind authentication, enter your a
 accessToken = psg.Input(defaultAccessToken, key='-ACCESS_TOKEN-', expand_x=True, justification='center')
 emailText = psg.Text('If you would like to send an email containing this message, enter the email address here. Enter no more than one email address. (Optional)', expand_x=True, justification='center')
 email = psg.Input('', key='-EMAIL-', expand_x=True, justification='center')
-phoneText = psg.Text('Send to notification to a phone number. Requires the authentication field to be filled out. (Optional)', expand_x=True, justification='center')
+phoneText = psg.Text('If you would like to send the notification to a phone number, enter it here. Requires authentication. Requires a verified phone number. (Optional)', expand_x=True, justification='center')
 phone = psg.Input('', key='-PHONE-', expand_x=True, justification='center')
 messageText = psg.Text('What would you like the message to be?', expand_x=True, justification='center')
 message = psg.Input('', key='-MESSAGE-', expand_x=True, justification='center')
