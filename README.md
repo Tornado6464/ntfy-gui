@@ -1,7 +1,7 @@
 [![Python application](https://github.com/tdavis6/ntfy-gui/actions/workflows/python-app.yml/badge.svg)](https://github.com/tdavis6/ntfy-gui/actions/workflows/python-app.yml)
-# ntfy-python-gui
+# ntfy-gui
 
-A short python gui that allows you to send data to a ntfy server. 
+A simple gui that allows you to send data to a ntfy server. 
 
 ## Screenshots
 ![image](https://github.com/tdavis6/ntfy-gui/assets/53464194/c04b6a7e-845c-40d7-a3c9-c46b7f86b442)
