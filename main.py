@@ -5,7 +5,7 @@ import os
 import os.path
 import typing
 
-version = "v1.1.1"
+version = "v1.2.0"
 
 
 # Check if the config.json exists, if it does not, create it.
