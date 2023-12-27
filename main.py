@@ -58,13 +58,15 @@ emailText = psg.Text('If you would like to send an email containing this message
 email = psg.Input('', key='-EMAIL-', expand_x=True, justification='center')
 phoneText = psg.Text('If you would like to send the notification to a phone number, enter it here. Requires authentication. Requires a verified phone number. (Optional)', expand_x=True, justification='center')
 phone = psg.Input('', key='-PHONE-', expand_x=True, justification='center')
+filePathText = psg.Text('Would you like to include a file? If so, paste the download link here. (Optional)', expand_x=True, justification='center')
+filePath = psg.Input('', key='-FILEPATH-', expand_x=True, justification='center')
 messageText = psg.Text('What would you like the message to be?', expand_x=True, justification='center')
 message = psg.Input('', key='-MESSAGE-', expand_x=True, justification='center')
 send = psg.Button('Send', key='-SEND-')
 save = psg.Button('Save', key='-SAVE-')
 
 psg.theme_global("DarkBlue15")
-layout = [[headerText], [serverText], [server], [topicText], [topic], [titleText], [title], [priorityText], [priority], [accessTokenText], [accessToken], [emailText], [email], [phoneText], [phone], [messageText], [message], [[send],[save]]]
+layout = [[headerText], [serverText], [server], [topicText], [topic], [titleText], [title], [priorityText], [priority], [accessTokenText], [accessToken], [emailText], [email], [phoneText], [phone], [filePathText], [filePath], [messageText], [message], [[send],[save]]]
 window = psg.Window('ntfy GUI', layout, size=(1000,600))
 
 # GUI
@@ -87,8 +89,9 @@ while True:
             email = values['-EMAIL-']
             phone = values['-PHONE-']
             message = values['-MESSAGE-']
+            filePath = values['-FILEPATH-']
             url = server + '/' + topic
-            requests.post(url, data=message, headers={"Title":title,"Priority":priority,"Authorization": "Bearer " + accessToken, "Email": email, 'Call': phone})
+            requests.post(url, data=message, headers={"Title":title,"Priority":priority,"Authorization": "Bearer " + accessToken, "Email": email, 'Call': phone, 'Attach': filePath})
             psg.popup_ok("Message sent.")
 
     if event =='-SAVE-':
