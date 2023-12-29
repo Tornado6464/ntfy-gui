@@ -5,7 +5,7 @@ import os
 import os.path
 import typing
 
-version = "v1.2.0"
+version = "v1.2.1"
 
 
 # Check if the config.json exists, if it does not, create it.
@@ -44,7 +44,7 @@ with open("./ntfy-gui/config.json", "r") as f:
 
 # Basic set up for GUI
 headerText = psg.Text('Welcome! You are currently using ' + version + '\n', expand_x=True, justification='center')
-serverText = psg.Text('Input the server here. Ensure to include \"https://\".', expand_x=True, justification='center')
+serverText = psg.Text('Input the server address here. Ensure to include \"https://\".', expand_x=True, justification='center')
 server = psg.Input(defaultServer, key='-SERVER-', expand_x=True, justification='center')
 topicText = psg.Text('What topic do you want to post to?', expand_x=True, justification='center')
 topic = psg.Input(defaultTopic, key='-TOPIC-', expand_x=True, justification='center')
